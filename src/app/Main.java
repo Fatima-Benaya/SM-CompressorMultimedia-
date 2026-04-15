@@ -7,7 +7,7 @@ import model.EcgSignal;
 public class Main {
 
     public static void main(String[] args) {
-        
+
         String filePath = "ecg_signal_patient_1.txt";
         if (args.length > 0) {
             filePath = args[0];
@@ -18,18 +18,18 @@ public class Main {
         try {
             EcgSignal signal = reader.read(filePath);
 
-            System.out.println("Fichero leido correctamente: " + filePath);
+            System.out.println("Fitxer llegit correctament: " + filePath);
             System.out.println("LEN = " + signal.getHeader().getLen());
             System.out.println("BPM = " + signal.getHeader().getBpm());
             System.out.println("SPR = " + signal.getHeader().getSpr());
-            System.out.println("Numero de muestras = " + signal.getSamples().length);
+            System.out.println("Nombre de mostres = " + signal.getSamples().length);
 
-            System.out.println("Muestras leidas:");
+            System.out.println("Mostres llegides:");
             for (double sample : signal.getSamples()) {
                 System.out.println(sample);
             }
         } catch (Exception e) {
-            System.out.println("Ha habido un error al leer el fichero.");
+            System.out.println("Hi ha hagut un error en llegir el fitxer.");
             System.out.println(e.getMessage());
         }
     }
