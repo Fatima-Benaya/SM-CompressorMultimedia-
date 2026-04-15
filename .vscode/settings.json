@@ -1,0 +1,7 @@
+{
+    "java.project.outputPath": "out",
+    "files.exclude": {
+        "**/*.class": true,
+        "**/out": true
+    }
+}
