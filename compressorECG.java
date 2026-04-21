@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class compressorECG {
 
     static final String INPUT_FILE  = "ecg_signal_patient_1.txt";
-    static final String OUTPUT_FILE = "ecg_signal_patient_1_compressed.txt";
+    static final String OUTPUT_FILE = "ecg_signal_patient_1.cmp";
 
     public static void main(String[] args) {
         
@@ -84,7 +84,7 @@ public class compressorECG {
             dos.close();
 
             //Missatges de control
-            System.out.println("ECG comprimit parcialment feta");
+            System.out.println("ECG comprimit correctement.");
             System.out.println ("LEN: " + len);
             System.out.println ("BPM: " + bpm);
             System.out.println ("SPR: " + spr);
