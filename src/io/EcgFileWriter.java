@@ -35,11 +35,11 @@ public class EcgFileWriter {
             bw.newLine();
 
             // ---------- MOSTRES ----------
-            for (int i = 0; i < samples.length; i++) {
+            for (double sample: samples) {
 
-                double sample = samples[i];
+                
 
-                bw.write(i + " " + sample);
+                bw.write(String.format("%.5f",sample));
                 bw.newLine();
             }
 
