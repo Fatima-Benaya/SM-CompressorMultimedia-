@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         String inputFile = "ecg_signal_patient_1.txt";
-        String compressedFile = "ecg_signal_patient_1.ecgq";
+        String compressedFile = "ecg_signal_patient_1.cmp";
         String decompressedFile = "ecg_signal_patient_1_out.txt";
 
         if (args.length > 0) {
@@ -35,24 +35,21 @@ public class Main {
             // ---------- 2. COMPRIMIR ----------
             compressor.compress(
                     signal,
-                    compressedFile
-            );
+                    compressedFile);
 
             System.out.println("Fitxer comprimit: " + compressedFile);
 
             // ---------- 3. DESCOMPRIMIR ----------
             decompressor.decompress(
                     compressedFile,
-                    decompressedFile
-            );
+                    decompressedFile);
 
             System.out.println("Fitxer descomprimit: " + decompressedFile);
 
         } catch (Exception e) {
 
             System.out.println(
-                    "Error en el procés:"
-            );
+                    "Error en el procés:");
 
             e.printStackTrace();
         }

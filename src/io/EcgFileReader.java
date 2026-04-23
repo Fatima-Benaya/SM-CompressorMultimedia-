@@ -26,7 +26,7 @@ public class EcgFileReader {
         for (String rawLine : lines) {
             String line = rawLine.trim();
 
-            // Si la linea esta vacia, no hacemos nada.
+            // Si la linea esta buida, no fem res.
             if (line.isEmpty()) {
                 continue;
             }
