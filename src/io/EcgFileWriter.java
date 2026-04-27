@@ -6,20 +6,18 @@ import model.EcgSignal;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
-// Aquesta classe escriu un objecte EcgSignal en un fitxer de text.
 public class EcgFileWriter {
 
-    // Escriu el senyal complet en un fitxer.
     public void write(EcgSignal signal, String filePath)
             throws IOException {
 
         EcgHeader header = signal.getHeader();
         double[] samples = signal.getSamples();
 
-        try (BufferedWriter bw =
-                     new BufferedWriter(
-                             new FileWriter(filePath))) {
+        try (BufferedWriter bw = new BufferedWriter(
+                new FileWriter(filePath))) {
 
             // ---------- CAPÇALERA ----------
             bw.write("LEN " + header.getLen());
@@ -31,22 +29,25 @@ public class EcgFileWriter {
             bw.write("SPR " + header.getSpr());
             bw.newLine();
 
-            // línia en blanc (opcional)
             bw.newLine();
 
             // ---------- MOSTRES ----------
-            for (double sample: samples) {
+            // Reconstruim la primera columna amb el temps:
+            // temps = index / SPR
+            for (int i = 0; i < samples.length; i++) {
 
-                
+                double time = i / (double) header.getSpr();
 
-                bw.write(String.format("%.5f",sample));
+                bw.write(String.format(
+                        Locale.US,
+                        "%.4f %.5f",
+                        time,
+                        samples[i]));
+
                 bw.newLine();
             }
 
-            System.out.println(
-                    "Fitxer escrit correctament: "
-                    + filePath
-            );
+            System.out.println("Fitxer escrit correctament: " + filePath);
         }
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package compressor;
 
 // Guarda la capçalera del fitxer comprimit .cmp
 public class CmpHeader {
@@ -13,7 +13,7 @@ public class CmpHeader {
     private double maxDiff;
 
     public CmpHeader(String signatura, int len, int bpm, int spr, int numSamples,
-                     double firstSample, double minDiff, double maxDiff) {
+            double firstSample, double minDiff, double maxDiff) {
         this.signatura = signatura;
         this.len = len;
         this.bpm = bpm;

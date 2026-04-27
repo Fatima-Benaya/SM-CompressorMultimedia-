@@ -1,4 +1,5 @@
 package compressor;
+
 import model.EcgHeader;
 import model.EcgSignal;
 
@@ -8,9 +9,7 @@ import java.io.IOException;
 
 public class EcgCompressor {
 
-
-// Compressor que utilitza min, max i factor q
-
+    // Compressor que utilitza min, max i factor q
 
     // Nombre de nivells de quantificació
     private static final int LEVELS = 255;
@@ -30,23 +29,24 @@ public class EcgCompressor {
         double max = -Double.MAX_VALUE;
 
         for (double s : samples) {
-            if (s < min) min = s;
-            if (s > max) max = s;
+            if (s < min)
+                min = s;
+            if (s > max)
+                max = s;
         }
 
         // 2. Calcular factor de quantificació q
         double q;
 
         if (max == min) {
-            q = 1.0;
+            q = 0.0;
         } else {
             q = (max - min) / LEVELS;
         }
 
         // 3. Escriure fitxer comprimit
-        try (DataOutputStream dos =
-                     new DataOutputStream(
-                             new FileOutputStream(outputFile))) {
+        try (DataOutputStream dos = new DataOutputStream(
+                new FileOutputStream(outputFile))) {
 
             // ---------- MAGIC NUMBER ----------
             dos.writeBytes("ECGQ");
@@ -72,14 +72,14 @@ public class EcgCompressor {
                 if (q == 0) {
                     compressed = 0;
                 } else {
-                    compressed = (int)
-                            Math.round(
-                                    (sample - min) / q
-                            );
+                    compressed = (int) Math.round(
+                            (sample - min) / q);
                 }
 
-                if (compressed < 0) compressed = 0;
-                if (compressed > LEVELS) compressed = LEVELS;
+                if (compressed < 0)
+                    compressed = 0;
+                if (compressed > LEVELS)
+                    compressed = LEVELS;
 
                 dos.writeByte(compressed);
             }
@@ -92,6 +92,4 @@ public class EcgCompressor {
         }
     }
 
-     
-    
 }

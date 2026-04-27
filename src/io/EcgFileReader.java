@@ -26,7 +26,7 @@ public class EcgFileReader {
         for (String rawLine : lines) {
             String line = rawLine.trim();
 
-            // Si la linea esta buida, no fem res.
+            // Si la linea esta vacia, no hacemos nada.
             if (line.isEmpty()) {
                 continue;
             }
@@ -57,6 +57,10 @@ public class EcgFileReader {
         // Si falta algun dato importante, el fichero no es valido.
         if (len == -1 || bpm == -1 || spr == -1) {
             throw new IllegalArgumentException("Faltan datos de cabecera: LEN, BPM o SPR.");
+        }
+
+        if (samples.isEmpty()) {
+            throw new IllegalArgumentException("El fitxer ECG no conté mostres.");
         }
 
         double[] sampleArray = new double[samples.size()];
