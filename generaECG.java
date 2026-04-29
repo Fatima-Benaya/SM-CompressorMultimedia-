@@ -12,7 +12,7 @@ public class generaECG {
         double beatPeriod = 60.0 / BPM;
         int totalSamples = LEN * SPR;
 
-        try (FileWriter writer = new FileWriter("ecg_signal.txt")) {
+        try (FileWriter writer = new FileWriter("ecg_signal_generat.txt")) {
 
             // Capçalera
             writer.write("LEN " + LEN + "\n");

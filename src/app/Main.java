@@ -10,9 +10,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String inputFile = "ecg_signal_patient_2.txt";
-        String compressedFile = "ecg_signal_patient_2.cmp";
-        String decompressedFile = "ecg_signal_patient_2_out.txt";
+        String inputFile = "t_forn_1.txt";
+        String compressedFile = "t_forn_1.cmp";
+        String decompressedFile = "t_forn_1.txt.out";
 
         if (args.length > 0) {
             inputFile = args[0];
