@@ -9,9 +9,6 @@ import java.io.IOException;
 
 public class EcgCompressor {
 
-    // Compressor que utilitza min, max i factor q
-
-    // Nombre de nivells de quantificació
     private static final int LEVELS = 255;
 
     public void compress(EcgSignal signal, String outputFile)
@@ -24,7 +21,7 @@ public class EcgCompressor {
             throw new IllegalArgumentException("No hi ha mostres.");
         }
 
-        // 1. Trobar min i max del senyal
+        // Trobar min i max del senyal
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;
 
@@ -35,7 +32,7 @@ public class EcgCompressor {
                 max = s;
         }
 
-        // 2. Calcular factor de quantificació q
+        // Calcular factor de quantificació q
         double q;
 
         if (max == min) {
@@ -44,27 +41,21 @@ public class EcgCompressor {
             q = (max - min) / LEVELS;
         }
 
-        // 3. Escriure fitxer comprimit
+        // Escriure fitxer comprimit
         try (DataOutputStream dos = new DataOutputStream(
                 new FileOutputStream(outputFile))) {
 
-            // ---------- MAGIC NUMBER ----------
             dos.writeBytes("ECGQ");
-
-            // ---------- CAPÇALERA COMPRIMIDA ----------
-            // (ja és compressió perquè és binari)
 
             dos.writeInt(header.getLen());
             dos.writeInt(header.getBpm());
             dos.writeInt(header.getSpr());
 
-            // ---------- INFORMACIÓ NECESSÀRIA ----------
             dos.writeInt(samples.length);
             dos.writeDouble(min);
             dos.writeDouble(max);
             dos.writeDouble(q);
 
-            // ---------- MOSTRES COMPRIMIDES ----------
             for (double sample : samples) {
 
                 int compressed;

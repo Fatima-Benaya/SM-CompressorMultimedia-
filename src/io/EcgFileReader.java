@@ -9,11 +9,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-// Esta clase lee un fichero ECG de texto y construye un objeto EcgSignal.
+/**
+ * Aquesta classe llegeix un fitxer de text amb format ECG i el converteix en un objecte EcgSignal.
+ */
 public class EcgFileReader {
 
-    // Lee el fichero completo.
-    // Espera encontrar las cabeceras LEN, BPM y SPR, y despues las muestras.
     public EcgSignal read(String filePath) throws IOException {
         List<String> lines = Files.readAllLines(Path.of(filePath));
 
@@ -24,14 +24,12 @@ public class EcgFileReader {
         List<Double> samples = new ArrayList<>();
 
         for (String rawLine : lines) {
-            String line = rawLine.trim();
+            String line = rawLine.trim(); 
 
-            // Si la linea esta vacia, no hacemos nada.
             if (line.isEmpty()) {
                 continue;
             }
 
-            // Leemos cada dato de la cabecera.
             if (line.startsWith("LEN")) {
                 len = extractInt(line);
                 continue;
@@ -47,16 +45,16 @@ public class EcgFileReader {
                 continue;
             }
 
-            // Si no es cabecera, intentamos sacar una muestra numerica.
+            
             Double sample = extractLastDouble(line);
             if (sample != null) {
                 samples.add(sample);
             }
         }
 
-        // Si falta algun dato importante, el fichero no es valido.
+        
         if (len == -1 || bpm == -1 || spr == -1) {
-            throw new IllegalArgumentException("Faltan datos de cabecera: LEN, BPM o SPR.");
+            throw new IllegalArgumentException("El fitxer ECG no conté una capçalera vàlida.");
         }
 
         if (samples.isEmpty()) {
@@ -72,10 +70,8 @@ public class EcgFileReader {
         return new EcgSignal(header, sampleArray);
     }
 
-    // Busca el primer numero entero de una linea.
-    // Ejemplo: "LEN=10" devuelve 10.
     private int extractInt(String line) {
-        String[] parts = line.split("[^0-9-]+");
+        String[] parts = line.split("[^0-9-]+"); 
 
         for (String part : parts) {
             if (!part.isEmpty()) {
@@ -83,13 +79,10 @@ public class EcgFileReader {
             }
         }
 
-        throw new IllegalArgumentException("No se pudo leer un entero de la linea: " + line);
+        throw new IllegalArgumentException("No s'ha pogut llegir un enter de la línia: " + line);
     }
 
-    // Busca el ultimo numero decimal de una linea.
-    // Esto permite leer lineas como:
-    // "0.123"
-    // "12 0.456"
+
     private Double extractLastDouble(String line) {
         String[] parts = line.split("\\s+");
 
@@ -97,7 +90,7 @@ public class EcgFileReader {
             try {
                 return Double.parseDouble(parts[i].replace(',', '.'));
             } catch (NumberFormatException e) {
-                // Si esta parte no es un numero, seguimos buscando.
+                
             }
         }
 

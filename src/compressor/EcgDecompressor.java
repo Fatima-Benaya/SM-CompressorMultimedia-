@@ -8,8 +8,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-// Aquesta classe descomprimeix un fitxer ECG binari
-// i utilitza EcgFileWriter per generar el fitxer de text.
+
 public class EcgDecompressor {
 
         public EcgSignal decompress(
@@ -20,8 +19,8 @@ public class EcgDecompressor {
                 try (DataInputStream dis = new DataInputStream(
                                 new FileInputStream(inputFile))) {
 
-                        // ---------- 1. LLEGIR MAGIC NUMBER ----------
-                        byte[] magicBytes = new byte[4];
+                        
+                        byte[] magicBytes = new byte[4];   
                         dis.readFully(magicBytes);
 
                         String magic = new String(magicBytes);
@@ -31,7 +30,7 @@ public class EcgDecompressor {
                                                 "Format de fitxer incorrecte.");
                         }
 
-                        // ---------- 2. LLEGIR CAPÇALERA ----------
+                        // LLEGIR LA CAPÇALERA
                         int len = dis.readInt();
                         int bpm = dis.readInt();
                         int spr = dis.readInt();
@@ -42,7 +41,7 @@ public class EcgDecompressor {
                         double max = dis.readDouble();
                         double q = dis.readDouble();
 
-                        // ---------- 3. RECONSTRUIR MOSTRES ----------
+                        // RECONSTRUIR LES MOSTRES 
                         double[] samples = new double[numSamples];
 
                         for (int i = 0; i < numSamples; i++) {
@@ -54,24 +53,23 @@ public class EcgDecompressor {
                                 if (q == 0) {
                                         sample = min;
                                 } else {
-                                        sample = min +
-                                                        compressed * q;
+                                        sample = min + compressed * q;
                                 }
 
                                 samples[i] = sample;
                         }
 
-                        // ---------- 4. CREAR OBJECTES MODEL ----------
+                        // CREAR OBJECTE DESCOMPRIMIT        
                         EcgHeader header = new EcgHeader(len, bpm, spr);
 
                         EcgSignal signal = new EcgSignal(header, samples);
 
-                        // ---------- 5. ESCRIURE FITXER AMB FileWriter ----------
+                        
                         EcgFileWriter writer = new EcgFileWriter();
 
                         writer.write(signal, outputFile);
 
-                        // ---------- MISSATGES DE CONTROL ----------
+                        
                         System.out.println("Descompressió completada.");
                         System.out.println("Fitxer generat: " + outputFile);
                         System.out.println("LEN: " + len);

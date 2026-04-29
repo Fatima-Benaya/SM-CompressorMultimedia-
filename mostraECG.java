@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class mostraECG extends JPanel {
 
-    static final String FILE_NAME = "ecg_signal_patient_1.txt";
+    static final String FILE_NAME = "ecg_signal_extrem.txt";
 
     ArrayList<Double> values = new ArrayList<>();
 
@@ -34,7 +34,8 @@ public class mostraECG extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (values.size() < 2) return;
+        if (values.size() < 2)
+            return;
 
         int w = getWidth();
         int h = getHeight();
@@ -43,8 +44,10 @@ public class mostraECG extends JPanel {
         double max = -Double.MAX_VALUE;
 
         for (double v : values) {
-            if (v < min) min = v;
-            if (v > max) max = v;
+            if (v < min)
+                min = v;
+            if (v > max)
+                max = v;
         }
 
         int prevX = 0;
@@ -52,7 +55,7 @@ public class mostraECG extends JPanel {
 
         for (int i = 1; i < values.size(); i++) {
 
-            int x = (int)((i / (double)values.size()) * w);
+            int x = (int) ((i / (double) values.size()) * w);
             int y = scale(values.get(i), min, max, h);
 
             g.drawLine(prevX, prevY, x, y);
@@ -63,7 +66,7 @@ public class mostraECG extends JPanel {
     }
 
     int scale(double v, double min, double max, int h) {
-        return (int)(h - ((v - min) / (max - min)) * h);
+        return (int) (h - ((v - min) / (max - min)) * h);
     }
 
     public static void main(String[] args) {

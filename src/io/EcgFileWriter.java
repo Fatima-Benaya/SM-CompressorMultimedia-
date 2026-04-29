@@ -19,7 +19,7 @@ public class EcgFileWriter {
         try (BufferedWriter bw = new BufferedWriter(
                 new FileWriter(filePath))) {
 
-            // ---------- CAPÇALERA ----------
+            
             bw.write("LEN " + header.getLen());
             bw.newLine();
 
@@ -31,9 +31,8 @@ public class EcgFileWriter {
 
             bw.newLine();
 
-            // ---------- MOSTRES ----------
-            // Reconstruim la primera columna amb el temps:
-            // temps = index / SPR
+            
+            // Reconstruim la primera columna amb el temps: temps = index / SPR
             for (int i = 0; i < samples.length; i++) {
 
                 double time = i / (double) header.getSpr();

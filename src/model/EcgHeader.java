@@ -1,13 +1,13 @@
 package model;
 
-// Guarda les dades principals de la capcalera del fitxer ECG.  
+// Guarda les dades principals de la capçalera del fitxer ECG.  
 public class EcgHeader {
 
     private int len;
     private int bpm;
     private int spr;
 
-    // Constructor per guardar els 3 valores de la capcalera.
+    
     public EcgHeader(int len, int bpm, int spr) {
         this.len = len;
         this.bpm = bpm;
